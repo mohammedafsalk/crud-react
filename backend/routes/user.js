@@ -1,6 +1,11 @@
 import express from "express";
 import multer from "multer";
-import { userLogin, userReg } from "../controllers/user.js";
+import {
+  checkLogin,
+  userLogin,
+  userLogout,
+  userReg,
+} from "../controllers/user.js";
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -17,5 +22,7 @@ const upload = multer({ storage: storage });
 
 router.post("/register", userReg);
 router.post("/login", userLogin);
+router.get("/checkAuth", checkLogin);
+router.get("/logout", userLogout);
 
 export default router;

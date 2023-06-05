@@ -16,9 +16,10 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
   },
-  // admin:{
-  //     default:false
-  // },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
   profile: {
     type: String,
     default: "avatar.png",
