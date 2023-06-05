@@ -77,11 +77,41 @@ export async function getUser(req, res) {
   res.json(user);
 }
 
-export async function updateUser(req,res){
-
+export async function createUser(req, res) {
+  try {
+    const { name, email, password, about, profession } = req.body;
+    const hashPassword = bcrypt.hashSync(password, salt);
+    const user = await UserModel.findOne({ email });
+    if (user) {
+      return res.json({ error: true, message: "User Already Exist" });
+    }
+    const newUser = new UserModel({
+      name,
+      email,
+      password: hashPassword,
+      about,
+      profession,
+    });
+    await newUser.save();
+    return res.json({ error: false, message: "success" });
+  } catch (error) {
+    res.json({ error: error });
+  }
 }
 
-export async function deleteUser(req,res){
-    await UserModel.findByIdAndDelete(req.params.id)
-    res.json({error:false,message:"user deleted"})
+export async function updateUser(req, res) {
+  try {
+    const { name, email, about, profession, id } = req.body;
+    await UserModel.findByIdAndUpdate(id, {
+      $set: { name, email, about, profession },
+    });
+    return res.json({ error: false });
+  } catch (error) {
+    res.json({ error: error });
+  }
+}
+
+export async function deleteUser(req, res) {
+  await UserModel.findByIdAndDelete(req.params.id);
+  res.json({ error: false, message: "user deleted" });
 }
