@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "mdb-react-ui-kit/dist/css/mdb.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import axios from "axios";
+import UserHome from "./Components/userHome/UserHome";
+import UserLogin from "./Components/userLogin/UserLogin";
+import UserRegister from "./Components/UserRegister/UserRegister";
+
 
 function App() {
+  axios.defaults.baseURL = "http://localhost:5000/";
+  axios.defaults.withCredentials = true;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+      <Route path="/" element={<UserHome/>} />
+      <Route path="/login" element={<UserLogin/>} />
+      <Route path="/register" element={<UserRegister/>} />
+      </Routes>
+    </Router>
   );
 }
 

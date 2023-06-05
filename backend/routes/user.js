@@ -20,6 +20,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.get("/", (req, res)=>{res.json("data")})
 router.post("/register", userReg);
 router.post("/login", userLogin);
 router.get("/checkAuth", checkLogin);

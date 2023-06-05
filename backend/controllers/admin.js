@@ -79,7 +79,7 @@ export async function getUser(req, res) {
 
 export async function createUser(req, res) {
   try {
-    const { name, email, password, about, profession } = req.body;
+    const { name, email, password } = req.body;
     const hashPassword = bcrypt.hashSync(password, salt);
     const user = await UserModel.findOne({ email });
     if (user) {
@@ -88,9 +88,7 @@ export async function createUser(req, res) {
     const newUser = new UserModel({
       name,
       email,
-      password: hashPassword,
-      about,
-      profession,
+      password: hashPassword
     });
     await newUser.save();
     return res.json({ error: false, message: "success" });
@@ -101,7 +99,7 @@ export async function createUser(req, res) {
 
 export async function updateUser(req, res) {
   try {
-    const { name, email, about, profession, id } = req.body;
+    const { name, email, id } = req.body;
     await UserModel.findByIdAndUpdate(id, {
       $set: { name, email, about, profession },
     });

@@ -6,7 +6,7 @@ var salt = bcrypt.genSaltSync(10);
 
 export async function userReg(req, res) {
   try {
-    const { name, email, password, about, profession } = req.body;
+    const { name, email, password} = req.body;
     const hashPassword = bcrypt.hashSync(password, salt);
     const user = await UserModel.findOne({ email });
     if (user) {
@@ -15,9 +15,7 @@ export async function userReg(req, res) {
     const newUser = new UserModel({
       name,
       email,
-      password: hashPassword,
-      about,
-      profession,
+      password: hashPassword
     });
     await newUser.save();
     const token = jwt.sign(
