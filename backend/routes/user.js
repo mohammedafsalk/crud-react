@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import {
   checkLogin,
+  editProfile,
   userLogin,
   userLogout,
   userReg,
@@ -22,6 +23,7 @@ const upload = multer({ storage: storage });
 
 router.get("/", (req, res)=>{res.json("data")})
 router.post("/register", userReg);
+router.post("/edit-profile",upload.single('files'),editProfile)
 router.post("/login", userLogin);
 router.get("/checkAuth", checkLogin);
 router.get("/logout", userLogout);

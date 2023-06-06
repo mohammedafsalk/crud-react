@@ -6,7 +6,7 @@ var salt = bcrypt.genSaltSync(10);
 
 export async function userReg(req, res) {
   try {
-    const { name, email, password} = req.body;
+    const { name, email, password } = req.body;
     const hashPassword = bcrypt.hashSync(password, salt);
     const user = await UserModel.findOne({ email });
     if (user) {
@@ -15,7 +15,7 @@ export async function userReg(req, res) {
     const newUser = new UserModel({
       name,
       email,
-      password: hashPassword
+      password: hashPassword,
     });
     await newUser.save();
     const token = jwt.sign(
@@ -95,6 +95,19 @@ export async function checkLogin(req, res) {
     res.json({ loggedIn: false, error: error });
   }
 }
+
+export const editProfile = async (req, res) => {
+  try {
+    await UserModel.findByIdAndUpdate(req.body.id, {
+      $set: {
+        profile: req.file.filename,
+      },
+    });
+    return res.json({ error: false });
+  } catch (err) {
+    res.json({ error: true, message: "Something went wrong" });
+  }
+};
 
 export const userLogout = async (req, res) => {
   try {

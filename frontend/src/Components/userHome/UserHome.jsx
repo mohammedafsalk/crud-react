@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import Modal from "./Modal";
 
 const UserHome = () => {
   const dispatch = useDispatch();
@@ -17,8 +18,10 @@ const UserHome = () => {
   async function handleLogout() {
     let data = await axios.get("/logout");
     console.log(data);
-    dispatch({ type: 'refresh' });
+    dispatch({ type: "refresh" });
   }
+
+  const [open, setOpen] = useState(false);
 
   return (
     <Card
@@ -49,7 +52,12 @@ const UserHome = () => {
         <Typography color="text.secondary" align="center" gutterBottom>
           {value.details.email}
         </Typography>
-        <Button variant="contained" fullWidth sx={{ marginBottom: 1 }}>
+        <Button
+          variant="contained"
+          fullWidth
+          onClick={() => setOpen(true)}
+          sx={{ marginBottom: 1 }}
+        >
           Change Photo
         </Button>
         <Button
@@ -62,6 +70,7 @@ const UserHome = () => {
           Logout
         </Button>
       </CardContent>
+      <Modal open={open}  id={value.details._id} setOpen={setOpen} />
     </Card>
   );
 };
