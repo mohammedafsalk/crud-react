@@ -1,12 +1,6 @@
 import express from "express";
 import multer from "multer";
-import {
-  checkLogin,
-  editProfile,
-  userLogin,
-  userLogout,
-  userReg,
-} from "../controllers/user.js";
+import { editProfile } from "../controllers/user.js";
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -20,12 +14,9 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-router.get("/", (req, res)=>{res.json("data")})
-router.post("/register", userReg);
-router.post("/edit-profile",upload.single('files'),editProfile)
-router.post("/login", userLogin);
-router.get("/checkAuth", checkLogin);
-router.get("/logout", userLogout);
+router.get("/", (req, res) => {
+  res.json("data");
+});
+router.post("/edit-profile", upload.single("files"), editProfile);
 
 export default router;

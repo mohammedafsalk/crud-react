@@ -30,12 +30,15 @@ function AdminHeader({ search, setSearch }) {
           label="Search"
           variant="outlined"
           value={search}
-          onChange={(e)=>setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           sx={{ width: 300, mr: 5 }}
           InputProps={{
             sx: { color: "white" },
           }}
         />
+        <Button onClick={logOut} color="inherit" sx={{ color: "white" }}>
+          Add User
+        </Button>
         <Button onClick={logOut} color="inherit" sx={{ color: "white" }}>
           Logout
         </Button>
