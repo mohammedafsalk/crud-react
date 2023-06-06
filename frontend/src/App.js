@@ -13,6 +13,9 @@ import UserLogin from "./Components/userLogin/UserLogin";
 import UserRegister from "./Components/UserRegister/UserRegister";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import AdminHome from "./Components/AdminHome";
+import AdminLogin from "./Components/AdminLogin";
+import EditUser from "./Components/EditUser";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:5000/";
@@ -31,6 +34,10 @@ function App() {
         type: "user",
         payload: { login: data.loggedIn, details: data.user },
       });
+
+      let { data: admindata } = await axios.get("/admin/adminAuth");
+      console.log(admindata);
+      dispatch({ type: "admin", payload: { login: admindata.loggedIn } });
     })();
   }, [refresh]);
 
@@ -50,6 +57,23 @@ function App() {
           <Route
             path="/register"
             element={<Navigate to="/" replace={true} />}
+          />
+        </Routes>
+      )}
+      {admin.login === true && (
+        <Routes>
+          <Route path="/admin/" element={<AdminHome/>}/>
+          <Route path="/admin/create-user" element={<AdminHome/>} />
+          <Route path="/admin/update-user/:id" element={<EditUser/>} />
+          <Route path="/admin/*" element={<Navigate to='/admin/' replace={true} />} />
+        </Routes>
+      )}
+      {admin.login === false && (
+        <Routes>
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin/*"
+            element={<Navigate to="/admin/login" replace={true} />}
           />
         </Routes>
       )}

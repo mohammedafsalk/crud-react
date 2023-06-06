@@ -66,7 +66,7 @@ export async function adminLogout(req, res) {
 
 export async function getUsers(req, res) {
   let users = await UserModel.find(
-    { admin: { $ne: true } },
+    { admin: { $ne: true }, name: new RegExp(req.query.search, "i") },
     { password: 0 }
   ).lean();
   return res.json(users);
@@ -88,7 +88,7 @@ export async function createUser(req, res) {
     const newUser = new UserModel({
       name,
       email,
-      password: hashPassword
+      password: hashPassword,
     });
     await newUser.save();
     return res.json({ error: false, message: "success" });
@@ -101,7 +101,7 @@ export async function updateUser(req, res) {
   try {
     const { name, email, id } = req.body;
     await UserModel.findByIdAndUpdate(id, {
-      $set: { name, email, about, profession },
+      $set: { name, email},
     });
     return res.json({ error: false });
   } catch (error) {
