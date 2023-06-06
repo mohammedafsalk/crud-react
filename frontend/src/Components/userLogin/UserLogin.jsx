@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
@@ -26,6 +28,8 @@ function UserLogin() {
       let { data } = await axios.post("/login", { email, password });
       if (!data.error) {
         dispatch({ type: "refresh" });
+      } else {
+        toast.error(data.message);
       }
     }
   }
@@ -43,6 +47,7 @@ function UserLogin() {
         <Typography variant="h4" align="center" gutterBottom>
           Log In
         </Typography>
+        <ToastContainer />
         <form onClick={handleSubmit}>
           <TextField
             label="Email"
@@ -69,10 +74,8 @@ function UserLogin() {
             Login
           </Button>
           <Typography variant="body2" align="center" marginTop={1}>
-            Don't have an account?{" "}
-            <Link href="/register" underline="none">
-              Register
-            </Link>
+            Don't have an account?
+            <Link to="/register">Register</Link>
           </Typography>
         </form>
       </div>

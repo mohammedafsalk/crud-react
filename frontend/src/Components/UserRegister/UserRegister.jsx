@@ -3,17 +3,16 @@ import { useDispatch } from "react-redux";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function UserRegister() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errMessage, setErrMessage]=useState(null)
-
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function validate() {
     if (
@@ -36,8 +35,6 @@ function UserRegister() {
       });
       if (!data.error) {
         dispatch({ type: "refresh" });
-      } else {
-        setErrMessage(data.message);
       }
     }
   }
@@ -88,10 +85,7 @@ function UserRegister() {
             Save
           </Button>
           <Typography variant="body2" align="center" marginTop={1}>
-            Have an account?{" "}
-            <Link href="/login" underline="none">
-              Log In
-            </Link>
+            Have an account? <Link to="/login">Log in</Link>
           </Typography>
         </form>
       </div>
