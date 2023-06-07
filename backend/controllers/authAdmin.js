@@ -37,6 +37,7 @@ export async function adminLogin(req, res) {
 
 export async function adminAuth(req, res) {
   const token = req.cookies.adminToken;
+  console.log(token);
   if (!token) {
     return res.json({
       loggedIn: false,

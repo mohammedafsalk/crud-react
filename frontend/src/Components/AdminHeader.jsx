@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -36,9 +37,11 @@ function AdminHeader({ search, setSearch }) {
             sx: { color: "white" },
           }}
         />
-        <Button onClick={logOut} color="inherit" sx={{ color: "white" }}>
+        <Link to ='/admin/create-user' > 
+        <Button color="inherit" sx={{ color: "white" }}>
           Add User
         </Button>
+        </Link>
         <Button onClick={logOut} color="inherit" sx={{ color: "white" }}>
           Logout
         </Button>

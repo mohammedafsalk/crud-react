@@ -51,8 +51,10 @@ function AdminHome() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {user.map((row, index) => (
-              <TableRow key={row.id}>
+            {
+              user?.[0] &&
+            user.map((row, index) => (
+              <TableRow key={index}>
                 <TableCell align="center">{index + 1}</TableCell>
                 <TableCell align="center">
                   <img

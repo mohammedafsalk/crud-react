@@ -27,10 +27,12 @@ app.use(
 
 dotenv.config();
 
-app.use("/", authUserRouter);
-app.use("/", CheckAuthUser, userRouter);
+
 app.use("/admin", authAdminRouter);
 app.use("/admin", CheckAuthAdmin, adminRouter);
+
+app.use("/", authUserRouter);
+app.use("/", CheckAuthUser, userRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("server running on port 5000");

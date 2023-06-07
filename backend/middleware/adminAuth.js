@@ -4,7 +4,7 @@ import UserModel from "../models/userModel.js";
 async function CheckAuthAdmin(req, res, next) {
   try {
     const token = req.cookies.adminToken;
-    if (!token) return res.json({ error: true, message: "no token" });
+    if (!token) return res.json({  error: true, message: "token not found" });
 
     const verifiedJWT = jwt.verify(token, "myjwtsecretkey");
     const admin = await UserModel.findOne(
@@ -16,7 +16,6 @@ async function CheckAuthAdmin(req, res, next) {
     }
     next();
   } catch (err) {
-    console.log(err);
     res.json({ error: err });
   }
 }

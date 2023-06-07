@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import AdminHome from "./Components/AdminHome";
 import AdminLogin from "./Components/AdminLogin";
 import EditUser from "./Components/EditUser";
+import AdminCreateUser from "./Components/AdminCreateUser";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:5000/";
@@ -63,7 +64,7 @@ function App() {
       {admin.login === true && (
         <Routes>
           <Route path="/admin/" element={<AdminHome/>}/>
-          <Route path="/admin/create-user" element={<AdminHome/>} />
+          <Route path="/admin/create-user" element={<AdminCreateUser/>} />
           <Route path="/admin/update-user/:id" element={<EditUser/>} />
           <Route path="/admin/*" element={<Navigate to='/admin/' replace={true} />} />
         </Routes>
